@@ -1,0 +1,111 @@
+
+<div class="mt-5">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+
+                    <div class="card-header pb-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <input class="form-control" style="width: 300px;" type="text" name="search" [(ngModel)]="tableSearchText" autocomplete="off" placeholder="Rechercher...">
+                          </div>
+                          <div class="d-flex">
+                            <div class="me-2">
+                              <button class="btn btn-primary" (click)="ajouter()" routerLink="AjouterFoyer">Ajouter foyer</button>
+                            </div>
+                            <div class="me-2">
+                              <button class="btn btn-primary" (click)="Ajouterpdf()">PDF</button>
+                            </div>
+                            <div>
+                              <button class="btn btn-primary" (click)="AjouterExcel()">Excel</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table table-vcenter table-mobile-md card-table" border="1">
+                                <thead>
+                                    <tr>
+                                        <th>Nom de foyer</th>
+                                        <th>Capacite de foyer</th>
+                                        <th>Nom d'universite</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let foyers of foyer | filter:tableSearchText | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+                                        <td>{{foyers.nomFoyer}}</td>
+                                        <td>{{foyers.capaciteFoyer}}</td>
+                                        <td *ngIf="foyers.universite!=null; else nullDisplay">
+                                            <a class="btn btn-dark btn-sm">
+                                                {{foyers.universite.nomUniversite}}</a>
+                                        </td>
+                                        <ng-template #nullDisplay>
+                                            <td>
+                                                <a class="btn btn-warning btn-sm" style="background-color: rgb(231, 164, 102);">
+                                                    Non affecté
+                                                </a>
+                                            </td>
+                                        </ng-template>
+                                        <td class="col">
+                                                <a
+                                                class="btn text-success" (click)="saveDataLocal(foyers.universite)" [routerLink]="['ModifierFoyer',foyers.idFoyer,foyers.nomFoyer,foyers.capaciteFoyer]">
+                                                <span class="material-icons" > edit </span></a><a class="btn text-danger"
+                                                (click)="deleteFoyer(foyers.idFoyer)">
+                                                <span class="material-icons"> delete </span></a>
+                                            <button class="btn text-secondary" (click)="showlistebloc(foyers,foyers.capaciteFoyer)"
+                                                data-bs-toggle="modal" data-bs-target="#blocModal">
+                                                <span class="material-icons"> list </span>
+                                            </button>
+                                            <a class="btn btn-dribbble" [routerLink]="['AssignerBlocs',foyers.idFoyer]" >Assigner Blocs</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <pagination-controls
+                            previousLabel="Prev"
+                            nextLabel="Next"
+                            (pageChange)="onTableDataChange($event)"></pagination-controls>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- code pour afficher modal de button afficher -->
+<div class="modal" tabindex="-1" role="dialog" id="blocModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="text" class="form-control" placeholder="Rechercher un bloc.." [(ngModel)]="searchText" #ngModel="ngModel">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="max-height: 300px; overflow-y: auto;">
+                <div *ngIf="bloc.length > 0 && bloc.length < capaciteFoyerSended; else non">
+                    <h6 style="color:green">Vous avez la possibilité d'ajouter un maximum de {{capaciteFoyerSended-bloc.length}} blocs supplémentaires. </h6>
+                <p>Liste de bloc : </p>
+                <ul>
+                    <!-- Your ngFor loop for displaying modal content -->
+                    <li *ngFor="let b of bloc | filter:searchText">{{ b.nomBloc }}</li>
+                </ul>
+            </div>
+            <ng-template #non>
+                <td>
+                    <a style="color: rgb(134, 14, 14); align-items: center;">
+                        Aucun bloc n'a été attribué à ce foyer.                    
+                    </a>
+                </td>
+            </ng-template>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

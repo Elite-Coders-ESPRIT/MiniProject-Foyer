@@ -1,0 +1,78 @@
+<div class="mt-5">
+
+<main class="container">
+    <section class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Nombre total des foyers</h5>
+                </div>
+                <div class="card-body">
+                    <h2>{{ totalFoyers }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Nombre de capacité totale foyers</h5>
+                </div>
+                <div class="card-body">
+                    <h2>{{ totalCapacity }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Nombre total de blocs pour tous les foyers</h5>
+                </div>
+                <div class="card-body">
+                    <h2>{{ totalNumberOfBlocs }}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Nombre d'étudiants par foyer</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="barChartEtudiant" width="400" height="350"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Nombre de chambres par foyer</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="pieChartChambre" width="200" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card" style=" width: 400px; height: 435px;">
+                <div class="card-header">
+                    <h5 class="card-title">Nombre de chambres par type pour chaque foyer</h5>
+                </div>
+                <input type="text" class="form-control" placeholder="Rechercher un foyer" [(ngModel)]="tableSearchText">
+                <div class="card-body" >
+                    <div *ngFor="let chambre of ChambreByType | filter:tableSearchText" class="chambre-card">
+                        <h6>{{ chambre[0] }}</h6>
+                        <p>{{ chambre[1] }} double, {{ chambre[2] }} triple, {{ chambre[3] }} simple</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</div>

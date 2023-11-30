@@ -1,0 +1,64 @@
+<div class="mt-5">
+  <div class="container-fluid py-6 d-flex justify-content-center">
+    <div class="card shadow" style="width: 900px;">
+      <div class="card-header" style="background-color: #FFEEBA;">
+        <h5 class="card-title text-center">Modifier une foyer</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="ModifierFoyer()" #f="ngForm">
+          <div class="form-group">
+            <label for="nomFoyer">Nom de foyer</label>
+            <input type="text" class="form-control" id="nomFoyer" name="nomFoyer" [(ngModel)]="Foyers.nomFoyer" required
+              maxlength="20" pattern="[A-Za-z]+" #nomFoyerInput="ngModel">
+            <div *ngIf=" nomFoyerInput.invalid && (nomFoyerInput.dirty || nomFoyerInput.touched)" class="text-danger">
+              <div *ngIf="nomFoyerInput.errors?.['required']">Nom de foyer est requis.</div>
+              <div *ngIf="nomFoyerInput.errors?.['pattern']">Entrez des caractères alphabétiques seulement.</div>
+              <div *ngIf="nomFoyerInput.errors?.['maxlength']">Le nom de foyer doit avoir au maximum 20 caractères.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="capaciteFoyer">Capacité de foyer</label>
+            <input type="number" class="form-control" id="capaciteFoyer" name="capaciteFoyer"
+              [(ngModel)]="Foyers.capaciteFoyer" #capaciteFoyerInput="ngModel" required min="1" max="10">
+            <div *ngIf=" capaciteFoyerInput.invalid && (capaciteFoyerInput.dirty || capaciteFoyerInput.touched)"
+              class="text-danger">
+              <div *ngIf="capaciteFoyerInput.errors?.['required']">Capacité de foyer est requise.</div>
+              <div *ngIf="capaciteFoyerInput.errors?.['min']">La capacité doit être au moins 1.</div>
+              <div *ngIf="capaciteFoyerInput.errors?.['max']">La capacité ne peut pas dépasser 10.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group" >
+              <label for="universite">Choose a University:</label>
+              
+              <select class="form-control" id="universite" name="Foyers.universite"  [(ngModel)]="Foyers.universite" >
+               <option [ngValue]="selectedUniversite" *ngIf="selectedUniversite != null">{{ selectedUniversite.nomUniversite }}</option>
+               <option [ngValue]="value" *ngIf="selectedUniversite == null">Sans universite</option>
+               <ng-container *ngIf="universites.length > 0; else notFound">
+                  <option *ngFor="let universite of universites" [ngValue]="universite">
+                    {{ universite.nomUniversite }}
+                  </option>
+
+                </ng-container>                 
+                <option [ngValue]="value" *ngIf="selectedUniversite != null">Sans universite</option>
+
+                <ng-template #notFound>
+                  <option disabled selected>Not Found</option>
+                </ng-template>
+              </select>
+              <ng-template *ngIf="UniversiteNull == true">
+                <p style="color:red">Veuillez choisir un Université</p>
+              </ng-template>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary" style="background-color: #FFEEBA; color: #323236;" [disabled]="f.invalid">Modifier</button>
+          </div>
+          <div *ngIf="InvalideMessage == true" class="text-danger">les champs ne sont pas valider !</div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

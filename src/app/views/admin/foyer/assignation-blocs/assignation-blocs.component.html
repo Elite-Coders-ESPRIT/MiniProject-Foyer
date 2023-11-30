@@ -1,0 +1,38 @@
+<div class="mt-5">
+  <div class="container-fluid py-6 d-flex justify-content-center">
+    <div class="card shadow" style="width: 600px;">
+      <div class="card-header" style="background-color: #FFEEBA;">
+        <h5 class="card-title text-center">Assigner des blocs à un foyer</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-flex mt-2 justify-content-between">
+          <button class="btn btn-primary" (click)="selectAllOptions()">Select All</button>
+          <button class="btn btn-secondary" (click)="ResetOptions()">Reset</button>
+        </div>
+
+        <input class="form-control mt-3" placeholder="Rechercher..." (input)="filterOptions($event)">
+        
+<ngx-select-dropdown
+ class="form-control mt-3 " 
+ [options]="filteredOptions"
+ [(ngModel)]="SelectedBlocs"
+ [multiple]="true"
+ (change)="onSelectionChange($event)"
+ [disabled]="blocs.length === 0"
+
+></ngx-select-dropdown>
+
+        <div class="text-center mt-4">
+          <button class="btn " (click)="assignBlocsToFoyer()" style="background-color: #FFEEBA;"  [disabled]="blocs.length === 0">Assigner</button>
+        </div>
+        <div *ngIf="messageErreur == true" class="text-danger">doit sélectionner au moin un bloc !</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div *ngIf="SelectedBlocs.length == 0" class="alert alert-danger mt-3">
+  La liste des blocs est vide. Veuillez ajouter des blocs pour continuer.
+</div> -->
+
