@@ -21,9 +21,10 @@ export class AssignationBlocsComponent {
 
   selectedBlocNames: string[] = [];
   idFoyer: number;
-
+  capaciteDisponible:number;
   SelectedBlocs: string[]=[];
   filteredOptions: string[] = []; // Array to store filtered options
+  capaciteErr: boolean=false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,9 +34,11 @@ export class AssignationBlocsComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.idFoyer = params['idFoyer'];
+      this.capaciteDisponible=params['capaciteFoyer']-params['blocsDispo']
       this.getAllBlocs();
-    });
 
+    });
+    
   }
 
   onAssignClick() {
@@ -104,7 +107,7 @@ export class AssignationBlocsComponent {
 
   assignBlocsToFoyer() {
     if(this.SelectedBlocs.length>0){ 
-  
+    if(this.NouvelleListeBlocs.length <= this.capaciteDisponible){
       if (this.idFoyer && this.NouvelleListeBlocs.length > 0) {
       this.foyerService.addBlocToFoyer(this.idFoyer, this.NouvelleListeBlocs).subscribe(
         (response: string) => {
@@ -119,6 +122,9 @@ export class AssignationBlocsComponent {
     } else {
       console.error('Invalid Foyer ID or no blocs selected!');
     }
+  }else{
+    this.capaciteErr=true;
+  }
   }else{
     this.messageErreur=true;
   }

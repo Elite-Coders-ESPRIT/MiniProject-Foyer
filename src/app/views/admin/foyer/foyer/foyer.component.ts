@@ -95,6 +95,8 @@ localStorage.clear()
   this.capaciteFoyerSended=capacite;
   }
 
+
+
   saveDataLocal(universite){
     localStorage.setItem('universite', JSON.stringify(universite));
   }

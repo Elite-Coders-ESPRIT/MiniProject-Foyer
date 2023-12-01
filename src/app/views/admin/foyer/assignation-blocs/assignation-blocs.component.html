@@ -26,7 +26,7 @@
           <button class="btn " (click)="assignBlocsToFoyer()" style="background-color: #FFEEBA;"  [disabled]="blocs.length === 0">Assigner</button>
         </div>
         <div *ngIf="messageErreur == true" class="text-danger">doit sélectionner au moin un bloc !</div>
-
+        <div *ngIf="capaciteErr == true" class="text-danger"> Vous avez sélectionné {{NouvelleListeBlocs.length }} blocs alors que seulement {{capaciteDisponible}} blocs sont disponibles.</div>
       </div>
     </div>
   </div>
