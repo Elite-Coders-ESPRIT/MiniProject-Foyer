@@ -35,7 +35,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let foyers of foyer | filter:tableSearchText | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+                                    <tr *ngFor="let foyers of foyer  | filter:tableSearchText | paginate: { itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index" appHighlight>
                                         <td>{{foyers.nomFoyer}}</td>
                                         <td>{{foyers.capaciteFoyer}}</td>
                                         <td *ngIf="foyers.universite!=null; else nullDisplay">
@@ -50,6 +50,7 @@
                                             </td>
                                         </ng-template>
                                         <td class="col">
+                                            <a class="btn text-success" (click)="openBlocShowForm(foyers)"><span class="material-icons">visibility</span></a>
                                                 <a
                                                 class="btn text-success" (click)="saveDataLocal(foyers.universite)" [routerLink]="['ModifierFoyer',foyers.idFoyer,foyers.nomFoyer,foyers.capaciteFoyer]">
                                                 <span class="material-icons" > edit </span></a><a class="btn text-danger"

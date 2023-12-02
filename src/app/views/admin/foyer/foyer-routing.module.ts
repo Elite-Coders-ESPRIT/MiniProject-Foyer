@@ -9,9 +9,9 @@ import { DashboardComponent } from '../dashboard/dashboard/dashboard.component';
 const routes: Routes = [  
 {path: "", component: FoyerComponent},
 { path: 'AjouterFoyer', component: AjouterFoyerComponent },
-{ path: 'ModifierFoyer/:idFoyer/:nomFoyer', component: ModifierFoyerComponent },
+{ path: 'ModifierFoyer/:idFoyer/:nomFoyer/:capaciteFoyer', component: ModifierFoyerComponent },
 { path: 'AssignerBlocs/:idFoyer/:capaciteFoyer/:blocsDispo', component: AssignationBlocsComponent },
-{path:"Dashboard",component:DashboardComponent}
+{path:"Dashboard",component:DashboardComponent},
 
 ];
 @NgModule({

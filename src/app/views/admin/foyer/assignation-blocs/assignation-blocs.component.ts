@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Bloc } from '../Model/Bloc';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FoyerService } from '../service/foyer.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-assignation-blocs',
@@ -28,7 +29,8 @@ export class AssignationBlocsComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private foyerService: FoyerService
+    private foyerService: FoyerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +40,6 @@ export class AssignationBlocsComponent {
       this.getAllBlocs();
 
     });
-    
   }
 
   onAssignClick() {
@@ -110,8 +111,9 @@ export class AssignationBlocsComponent {
     if(this.NouvelleListeBlocs.length <= this.capaciteDisponible){
       if (this.idFoyer && this.NouvelleListeBlocs.length > 0) {
       this.foyerService.addBlocToFoyer(this.idFoyer, this.NouvelleListeBlocs).subscribe(
-        (response: string) => {
-          console.log(response); // Log the response from the backend
+        () => {
+          
+          console.log(); // Log the response from the backend
           // Refresh or reload the page here if needed
         },
         (error: any) => {
@@ -121,13 +123,24 @@ export class AssignationBlocsComponent {
       );
     } else {
       console.error('Invalid Foyer ID or no blocs selected!');
+      return;
     }
   }else{
     this.capaciteErr=true;
+    return;
   }
   }else{
     this.messageErreur=true;
+    return;
   }
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: ' Liste de bloc ajouter avec succées',
+    showConfirmButton: false,
+    timer: 1500
+  });
+  this.router.navigate(['admin/foyer']);
   
 }
 }

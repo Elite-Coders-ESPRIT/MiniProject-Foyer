@@ -12,15 +12,18 @@ import { MultiSelectModule } from '@syncfusion/ej2-angular-dropdowns';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
+import { AfficherFoyerComponent } from './afficher-foyer/afficher-foyer.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HighlightDirective } from './foyer/highlight.directive';
 
 @NgModule({
   declarations: [
     FoyerComponent,
     AjouterFoyerComponent,
     ModifierFoyerComponent,
-    AssignationBlocsComponent
+    AssignationBlocsComponent,
+    AfficherFoyerComponent,
+    HighlightDirective
     
   ],
   imports: [
@@ -29,7 +32,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     Ng2SearchPipeModule,RouterModule,
     
     NgxPaginationModule,AngularMultiSelectModule,MultiSelectModule,
-    SelectDropDownModule
+    SelectDropDownModule,MatDialogModule
     
   ]
 })
